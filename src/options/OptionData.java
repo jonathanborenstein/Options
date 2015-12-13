@@ -26,6 +26,7 @@ public class OptionData {
 		parser = new JsonParser();
 		element = parser.parse(json);
 	}
+
 	
 	public JsonElement getOptionData() 
 	{
