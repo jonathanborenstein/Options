@@ -12,6 +12,7 @@ public class CallOptions {
 	private ArrayList<Double> oiList;
 	private ArrayList<Double> strikeList;
 	private ArrayList<String> expirationList;
+
 	
 	public CallOptions()
 	{
@@ -52,6 +53,7 @@ public class CallOptions {
 		}
 		
 	}
+	
 	
 	public ArrayList<Double> returnOiList()
 	{

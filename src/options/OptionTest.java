@@ -20,14 +20,30 @@ public class OptionTest {
 		
 		System.out.println();
 		
+		
+		
+		
 		CallData callFirstData = new CallData(first);
 		CallOptions firstCallOption = new CallOptions();
 		firstCallOption.setOi(callFirstData);
 		firstCallOption.setExpiration(callFirstData);
 		firstCallOption.setStrike(callFirstData);
-		System.out.println(firstCallOption.returnExpList());
+		;
 		System.out.println(firstCallOption.returnStrikeList());
 		System.out.println(firstCallOption.returnOiList());
+		
+		System.out.println();
+		
+		ComputeTotal cp = new ComputeTotal();
+		System.out.println(cp.computePutTotal(firstPutOption, putFirstData, 90));
+		System.out.println(cp.computeCallTotal(firstCallOption, callFirstData, 90));
+		System.out.println(cp.computeTotal(90));
+		
+		
+		
+		System.out.println();
+		
+		
 
 	}
 	
