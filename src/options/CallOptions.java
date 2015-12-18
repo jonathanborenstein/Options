@@ -84,10 +84,10 @@ public class CallOptions {
 			price = j;
 			for (int i = 0; i < data.getCallsData().size(); i++)
 			{
-				if ((this.returnOiList().get(i) != 0.0 && price > this.returnStrikeList().get(i)))
+				if (this.returnOiList().get(i) != 0.0 && price > this.returnStrikeList().get(i))
 				{
 					callTotal = (price - this.returnStrikeList().get(i)) * 
-							((this.returnOiList().get(i) * 100));
+							(this.returnOiList().get(i) * 100);
 					total = callTotal + total;
 				}
 			}
