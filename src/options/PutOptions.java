@@ -12,6 +12,7 @@ public class PutOptions {
 
 	private ArrayList<Double> oiList;
 	private ArrayList<Double> strikeList;
+	private ArrayList<Double> putsTotal;
 	private ArrayList<String> expirationList;
 	
 
@@ -20,6 +21,7 @@ public class PutOptions {
 		oiList =  new ArrayList<Double>();
 		strikeList = new ArrayList<Double>();
 		expirationList = new ArrayList<String>();
+		putsTotal = new ArrayList<Double>();
 	}
 
 	public void setOi(PutData data)
@@ -69,6 +71,36 @@ public class PutOptions {
 	public ArrayList<String> returnExpList()
 	{
 		return expirationList;
+	}
+	
+	public ArrayList<Double> computePutTotal(PutData data, double priceA)
+	{
+		double putTotal = 0.0;
+		double total = 0.0;
+		double price = priceA;
+
+		for (double j = price; j < priceA + 30; j = j + .5)
+		{
+			price = j;
+			for (int i = 0; i < data.getPutsData().size(); i++)
+			{
+				if ((this.returnOiList().get(i) != 0.0 && price < this.returnStrikeList().get(i)))
+				{
+					putTotal = (this.returnStrikeList().get(i) - price) * ((this.returnOiList().get(i) * 100));
+					total = putTotal + total;
+				}
+			}
+
+			putsTotal.add(total);
+			total = 0.0;
+		}
+
+		return putsTotal;
+	}
+	
+	public ArrayList<Double> returnPutsTotal()
+	{
+		return putsTotal;
 	}
 
 }

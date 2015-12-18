@@ -18,6 +18,7 @@ public class OptionTest {
 		System.out.println(firstPutOption.returnStrikeList());
 		System.out.println(firstPutOption.returnOiList());
 		
+		
 		System.out.println();
 		
 		
@@ -34,10 +35,12 @@ public class OptionTest {
 		
 		System.out.println();
 		
+		
+		System.out.println(firstPutOption.computePutTotal(putFirstData, 90));
+		System.out.println(firstCallOption.computeCallTotal(callFirstData, 90));
+		
 		ComputeTotal cp = new ComputeTotal();
-		System.out.println(cp.computePutTotal(firstPutOption, putFirstData, 90));
-		System.out.println(cp.computeCallTotal(firstCallOption, callFirstData, 90));
-		System.out.println(cp.computeTotal(90));
+		System.out.println(cp.computeTotal(90, firstPutOption, firstCallOption));
 		
 		
 		
