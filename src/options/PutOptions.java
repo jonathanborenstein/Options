@@ -9,6 +9,7 @@ public class PutOptions {
 	private String expiration;
 	private Double oi;
 	private Double strike;
+	private int price;
 
 	private ArrayList<Double> oiList;
 	private ArrayList<Double> strikeList;
@@ -22,6 +23,7 @@ public class PutOptions {
 		strikeList = new ArrayList<Double>();
 		expirationList = new ArrayList<String>();
 		putsTotal = new ArrayList<Double>();
+		price = 0;
 	}
 
 	public void setOi(PutData data)
@@ -73,15 +75,15 @@ public class PutOptions {
 		return expirationList;
 	}
 
-	public ArrayList<Double> computePutTotal(PutData data, double priceA)
+	public ArrayList<Double> computePutTotal(PutData data)
 	{
 		double putTotal = 0.0;
 		double total = 0.0;
-		double price = priceA;
+		double priceA = price;
 
 		for (double j = price; j < priceA + 30; j = j + .5)
 		{
-			price = j;
+			double price = j;
 			for (int i = 0; i < data.getPutsData().size(); i++)
 			{
 				if (this.returnOiList().get(i) != 0.0 && price < this.returnStrikeList().get(i))
@@ -102,6 +104,15 @@ public class PutOptions {
 	public ArrayList<Double> returnPutsTotal()
 	{
 		return putsTotal;
+	}
+
+	public int getPrice(OptionData data)
+	{
+
+		JsonObject dataset = data.getOptionData().getAsJsonObject();
+		price = dataset.get("underlying_price").getAsInt();
+
+		return price;
 	}
 
 }

@@ -15,12 +15,12 @@ public class ComputeTotal {
 		doubleTotal = new ArrayList<Double>();
 	}
 
-	public ArrayList<Double> computeTotal(double priceA, PutOptions puts, CallOptions calls) 
+	public ArrayList<Double> computeTotal(OptionData data, PutOptions puts, CallOptions calls) 
 	{
 		double putTotal = 0;
 		double callTotal = 0;
 		double total = 0.0;
-		double price = priceA;
+		double price = puts.getPrice(data);
 
 		for (int i =0; i < puts.returnPutsTotal().size(); i++)
 		{

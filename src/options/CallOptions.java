@@ -9,10 +9,13 @@ public class CallOptions {
 	private String expiration;
 	private Double oi;
 	private Double strike;
+	private int price;
+	
 	private ArrayList<Double> oiList;
 	private ArrayList<Double> strikeList;
 	private ArrayList<Double> callsTotal;
 	private ArrayList<String> expirationList;
+	
 
 
 
@@ -22,6 +25,7 @@ public class CallOptions {
 		strikeList = new ArrayList<Double>();
 		callsTotal = new ArrayList<Double>();
 		expirationList = new ArrayList<String>();
+		price = 0;
 	}
 
 	public void setOi(CallData data)
@@ -73,15 +77,15 @@ public class CallOptions {
 		return expirationList;
 	}
 
-	public ArrayList<Double> computeCallTotal(CallData data, double priceA)
+	public ArrayList<Double> computeCallTotal(CallData data)
 	{
 		double callTotal = 0.0;
 		double total = 0.0;
-		double price = priceA;
+		double priceA = price;
 
 		for (double j = price; j < priceA + 30; j = j + .5)
 		{
-			price = j;
+			double price = j;
 			for (int i = 0; i < data.getCallsData().size(); i++)
 			{
 				if (this.returnOiList().get(i) != 0.0 && price > this.returnStrikeList().get(i))
@@ -101,6 +105,15 @@ public class CallOptions {
 	public ArrayList<Double> returnCallsTotal()
 	{
 		return callsTotal;
+	}
+	
+	public int getPrice(OptionData data)
+	{
+
+		JsonObject dataset = data.getOptionData().getAsJsonObject();
+		price = dataset.get("underlying_price").getAsInt();
+
+		return price;
 	}
 
 }

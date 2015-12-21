@@ -14,11 +14,12 @@ public class OptionTest {
 		firstPutOption.setOi(putFirstData);
 		firstPutOption.setExpiration(putFirstData);
 		firstPutOption.setStrike(putFirstData);
+		firstPutOption.getPrice(first);
+		
+		
 		System.out.println(firstPutOption.returnExpList());
 		System.out.println(firstPutOption.returnStrikeList());
 		System.out.println(firstPutOption.returnOiList());
-		
-		
 		System.out.println();
 		
 		
@@ -27,22 +28,23 @@ public class OptionTest {
 		firstCallOption.setOi(callFirstData);
 		firstCallOption.setExpiration(callFirstData);
 		firstCallOption.setStrike(callFirstData);
+		firstCallOption.getPrice(first);
+		
 		
 		System.out.println(firstCallOption.returnStrikeList());
 		System.out.println(firstCallOption.returnOiList());
-		
 		System.out.println();
 		
 		
-		System.out.println(firstPutOption.computePutTotal(putFirstData, 90));
-		System.out.println(firstCallOption.computeCallTotal(callFirstData, 90));
+		System.out.println(firstPutOption.computePutTotal(putFirstData));
+		System.out.println(firstCallOption.computeCallTotal(callFirstData));
+		System.out.println();
+		
 		
 		ComputeTotal cp = new ComputeTotal();
-		System.out.println(cp.computeTotal(90, firstPutOption, firstCallOption));
+		System.out.println(cp.computeTotal(first, firstPutOption, firstCallOption));
 		
 		System.out.println("Max pain is: " + cp.getMaxPain());
-		
-		
 
 	}
 	
