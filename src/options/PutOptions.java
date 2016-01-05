@@ -28,22 +28,43 @@ public class PutOptions {
 
 	public void setOi(PutData data)
 	{
+		String oi2 = null;
 		for (int i =0; i < data.getPutsData().size(); i++)
 		{
 			JsonObject dataset = data.getPutsData().get(i).getAsJsonObject();
-			oi = dataset.get("oi").getAsDouble();
-			oiList.add(oi);
+			oi2 = dataset.get("oi").getAsString();
+			if (!oi2.equals("-")){
+				oi = Double.parseDouble(oi2);
+				oiList.add(oi);
+			}
+			else
+			{
+				oi = 0.0;
+				oiList.add(oi);
+			}
 		}
 
 	}
 
 	public void setStrike(PutData data)
 	{
+		String strike2 = null;
 		for (int i =0; i < data.getPutsData().size(); i++)
 		{
 			JsonObject dataset = data.getPutsData().get(i).getAsJsonObject();
-			strike = dataset.get("strike").getAsDouble();
+			strike2 = dataset.get("strike").getAsString();
+			
+			if (strike2.contains(",")){
+				strike2 = strike2.substring(0,1).concat(strike2.substring(2));
+				System.out.println(strike2);
+			}
+			
+			
+			
+
+			strike = Double.parseDouble(strike2);
 			strikeList.add(strike);
+
 		}
 
 	}

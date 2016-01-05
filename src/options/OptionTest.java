@@ -3,6 +3,8 @@ package options;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import javax.swing.JOptionPane;
+
 public class OptionTest {
 
 	public static void main(String[] args) throws MalformedURLException, IOException {
@@ -45,6 +47,7 @@ public class OptionTest {
 		System.out.println(cp.computeTotal(first, firstPutOption, firstCallOption));
 		
 		System.out.println("Max pain is: " + cp.getMaxPain());
+		JOptionPane.showMessageDialog(null, cp.getMaxPain());
 
 	}
 	

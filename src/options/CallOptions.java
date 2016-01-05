@@ -10,12 +10,12 @@ public class CallOptions {
 	private Double oi;
 	private Double strike;
 	private int price;
-	
+
 	private ArrayList<Double> oiList;
 	private ArrayList<Double> strikeList;
 	private ArrayList<Double> callsTotal;
 	private ArrayList<String> expirationList;
-	
+
 
 
 
@@ -30,22 +30,40 @@ public class CallOptions {
 
 	public void setOi(CallData data)
 	{
+		String oi2 = null;
 		for (int i =0; i < data.getCallsData().size(); i++)
 		{
 			JsonObject dataset = data.getCallsData().get(i).getAsJsonObject();
-			oi = dataset.get("oi").getAsDouble();
-			oiList.add(oi);
+			oi2 = dataset.get("oi").getAsString();
+			if (!oi2.equals("-")){
+				oi = Double.parseDouble(oi2);
+				oiList.add(oi);
+			}
+			else
+			{
+				oi = 0.0;
+				oiList.add(oi);
+			}
 		}
 
 	}
 
 	public void setStrike(CallData data)
 	{
+		String strike2 = null;
+		
 		for (int i =0; i < data.getCallsData().size(); i++)
 		{
 			JsonObject dataset = data.getCallsData().get(i).getAsJsonObject();
-			strike = dataset.get("strike").getAsDouble();
-			strikeList.add(strike);
+			strike2 = dataset.get("strike").getAsString();
+			
+			if (strike2.contains(",")){
+				strike2 = strike2.substring(0,1).concat(strike2.substring(2));
+				System.out.println(strike2);
+			}
+
+			strike = Double.parseDouble(strike2);
+			strikeList.add(strike);;
 		}
 
 	}
@@ -106,7 +124,7 @@ public class CallOptions {
 	{
 		return callsTotal;
 	}
-	
+
 	public int getPrice(OptionData data)
 	{
 
