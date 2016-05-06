@@ -1,24 +1,26 @@
 package options;
 
-import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+
+@Component("CallData")
 public class CallData {
 	
 	private JsonObject calls;
 	private JsonArray callsData;
 	
+	@Autowired
+	private OptionData call;
 	
-	public CallData(OptionData call) throws IOException
-	{
-		calls = call.getOptionData().getAsJsonObject();
-		callsData = calls.getAsJsonArray("calls");
-	}
 	
 	public JsonArray getCallsData() 
 	{
+		calls = call.getOptionData().getAsJsonObject();
+		callsData = calls.getAsJsonArray("calls");
 		return callsData;
 	}
 

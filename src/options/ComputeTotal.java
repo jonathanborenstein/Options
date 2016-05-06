@@ -3,11 +3,20 @@ package options;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component("ComputeTotal")
 public class ComputeTotal {
 
 	private ArrayList<String> opTotal;
 	private ArrayList<Double> doubleTotal;
+
+	@Autowired
+	private PutOptions puts;
+
+	@Autowired
+	private CallOptions calls;
 
 	public ComputeTotal() 
 	{
@@ -15,12 +24,12 @@ public class ComputeTotal {
 		doubleTotal = new ArrayList<Double>();
 	}
 
-	public ArrayList<Double> computeTotal(OptionData data, PutOptions puts, CallOptions calls) 
+	public ArrayList<Double> computeTotal() 
 	{
 		double putTotal = 0;
 		double callTotal = 0;
 		double total = 0.0;
-		double price = puts.getPrice(data);
+		double price = puts.getPrice();
 
 		for (int i =0; i < puts.returnPutsTotal().size(); i++)
 		{
@@ -34,11 +43,13 @@ public class ComputeTotal {
 		}
 
 		Collections.sort(doubleTotal);
+		System.out.println(opTotal);
 		return doubleTotal;
 	}
 
 	public String getMaxPain()
 	{
+		this.computeTotal();
 		String money = null;
 		String number = null;
 		for (int i = 0; i < doubleTotal.size(); i++)
@@ -51,11 +62,5 @@ public class ComputeTotal {
 		}
 		return money;
 	}
-
-
-
-
-
-
 
 }

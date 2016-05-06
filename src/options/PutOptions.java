@@ -1,9 +1,14 @@
 package options;
 
+
 import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonObject;
 
+@Component("PutOptions")
 public class PutOptions {
 
 	private String expiration;
@@ -15,6 +20,12 @@ public class PutOptions {
 	private ArrayList<Double> strikeList;
 	private ArrayList<Double> putsTotal;
 	private ArrayList<String> expirationList;
+	
+	@Autowired
+	private PutData data;
+	
+	@Autowired
+	private OptionData dataOpt;
 
 
 	public PutOptions()
@@ -26,7 +37,7 @@ public class PutOptions {
 		price = 0;
 	}
 
-	public void setOi(PutData data)
+	private void setOi()
 	{
 		String oi2 = null;
 		for (int i =0; i < data.getPutsData().size(); i++)
@@ -46,7 +57,7 @@ public class PutOptions {
 
 	}
 
-	public void setStrike(PutData data)
+	private void setStrike()
 	{
 		String strike2 = null;
 		for (int i =0; i < data.getPutsData().size(); i++)
@@ -69,7 +80,7 @@ public class PutOptions {
 
 	}
 
-	public void setExpiration(PutData data)
+	private void setExpiration()
 	{
 		for (int i =0; i < data.getPutsData().size(); i++)
 		{
@@ -83,24 +94,33 @@ public class PutOptions {
 
 	public ArrayList<Double> returnOiList()
 	{
+		this.setOi();
 		return oiList;
 	}
 
 	public ArrayList<Double> returnStrikeList()
 	{
+		this.setStrike();
 		return strikeList;
 	}
 
 	public ArrayList<String> returnExpList()
 	{
+		this.setExpiration();
 		return expirationList;
 	}
 
-	public ArrayList<Double> computePutTotal(PutData data)
+	public ArrayList<Double> computePutTotal()
 	{
+		
+		this.getPrice();
+		
 		double putTotal = 0.0;
 		double total = 0.0;
 		double priceA = price;
+		
+		this.setOi();
+		this.setStrike();
 
 		for (double j = price; j < priceA + 30; j = j + .5)
 		{
@@ -127,10 +147,10 @@ public class PutOptions {
 		return putsTotal;
 	}
 
-	public int getPrice(OptionData data)
+	public int getPrice()
 	{
 
-		JsonObject dataset = data.getOptionData().getAsJsonObject();
+		JsonObject dataset = dataOpt.getOptionData().getAsJsonObject();
 		price = dataset.get("underlying_price").getAsInt();
 
 		return price;

@@ -1,15 +1,19 @@
 package options;
 
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.JOptionPane;
 
 import org.apache.commons.io.IOUtils;
+import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+
+@Component("OptionData")
 public class OptionData {
 	
 	private String symbol;
@@ -18,6 +22,7 @@ public class OptionData {
 	private JsonParser parser;
 	private JsonElement element;
 	
+	@SuppressWarnings("deprecation")
 	public OptionData() throws MalformedURLException, IOException
 	{
 		symbol = JOptionPane.showInputDialog("Please Enter A Ticker Symbol");

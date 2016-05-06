@@ -2,8 +2,12 @@ package options;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.google.gson.JsonObject;
 
+@Component("CallOptions")
 public class CallOptions {
 
 	private String expiration;
@@ -16,9 +20,13 @@ public class CallOptions {
 	private ArrayList<Double> callsTotal;
 	private ArrayList<String> expirationList;
 
+	@Autowired
+	private CallData data;
+	
+	@Autowired
+	private OptionData dataOpt;
 
-
-
+	
 	public CallOptions()
 	{
 		oiList =  new ArrayList<Double>();
@@ -28,7 +36,7 @@ public class CallOptions {
 		price = 0;
 	}
 
-	public void setOi(CallData data)
+	private void setOi()
 	{
 		String oi2 = null;
 		for (int i =0; i < data.getCallsData().size(); i++)
@@ -48,7 +56,7 @@ public class CallOptions {
 
 	}
 
-	public void setStrike(CallData data)
+	private void setStrike()
 	{
 		String strike2 = null;
 		
@@ -68,7 +76,7 @@ public class CallOptions {
 
 	}
 
-	public void setExpiration(CallData data)
+	private void setExpiration()
 	{
 		for (int i =0; i < data.getCallsData().size(); i++)
 		{
@@ -82,24 +90,33 @@ public class CallOptions {
 
 	public ArrayList<Double> returnOiList()
 	{
+		this.setOi();
 		return oiList;
 	}
 
 	public ArrayList<Double> returnStrikeList()
 	{
+		this.setStrike();
 		return strikeList;
 	}
 
 	public ArrayList<String> returnExpList()
 	{
+		this.setExpiration();
 		return expirationList;
 	}
 
-	public ArrayList<Double> computeCallTotal(CallData data)
+	public ArrayList<Double> computeCallTotal()
 	{
+		
+		this.getPrice();
+		
 		double callTotal = 0.0;
 		double total = 0.0;
 		double priceA = price;
+		
+		this.setOi();
+		this.setStrike();
 
 		for (double j = price; j < priceA + 30; j = j + .5)
 		{
@@ -125,10 +142,10 @@ public class CallOptions {
 		return callsTotal;
 	}
 
-	public int getPrice(OptionData data)
+	public int getPrice()
 	{
 
-		JsonObject dataset = data.getOptionData().getAsJsonObject();
+		JsonObject dataset = dataOpt.getOptionData().getAsJsonObject();
 		price = dataset.get("underlying_price").getAsInt();
 
 		return price;
